@@ -1,3 +1,6 @@
+// @ts-ignore
+import clapSrc from "url:./121.wav";
+
 function pad2(n: number): string {
   return n.toString().padStart(2, "0");
 }
@@ -47,30 +50,50 @@ class SceneTake extends HTMLElement {
   constructor() {
     super();
     try {
-      this.take = localStorage["clapperboard-take"].toString();
+      this.take = parseInt(localStorage["clapperboard-take"]);
+      if (isNaN(this.take)) {
+        this.take = 1;
+      }
     } catch (e) {
-      this.take = 0;
+      this.take = 1;
     }
-    this.incrementTake();
   }
 
   connectedCallback() {
-    document.body.addEventListener("click", () => this.incrementTake());
+    this.textContent = (this.take + 1).toString() + " 🔜 ";
+    document.body.addEventListener("click", () => this.incrementTake(true));
   }
 
-  incrementTake() {
+  incrementTake(speak: boolean = true) {
     this.take++;
     this.textContent = this.take.toString();
     localStorage["clapperboard-take"] = this.take;
 
-    window.speechSynthesis.speak(
-      new SpeechSynthesisUtterance(`Take ${this.take}`)
-    );
+    // if (speak) {
+    //   console.log(speak);
+    //   window.speechSynthesis.speak(
+    //     new SpeechSynthesisUtterance(`Take ${this.take}`)
+    //   );
+    // }
 
     document.body.animate([{ opacity: "0", offset: 0 }], {
       duration: 200,
     });
+
+    // clap();
   }
 }
 
 customElements.define("scene-take", SceneTake);
+
+let clapElem: HTMLAudioElement;
+function newClapElem() {
+  clapElem = document.createElement("audio");
+  clapElem.src = clapSrc;
+  clapElem.preload = "true";
+}
+newClapElem();
+function clap() {
+  clapElem.play();
+  newClapElem();
+}
