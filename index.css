@@ -1,0 +1,80 @@
+@font-face {
+  font-family: digital-7-mono;
+  src: url("vendor/digital-7-mono.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: Ubuntu;
+  src: url("vendor/Ubuntu-Bold.ttf") format("truetype");
+}
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  font-family: Ubuntu;
+  font-size: 8vw;
+}
+
+body {
+  display: grid;
+  place-content: center;
+  /* grid-template-areas: "date-label auto-date" "time-label auto-time"; */
+  grid-template-columns: auto auto;
+  gap: 2vw;
+  background-color: #eaeaea;
+  background-image: linear-gradient(
+      45deg,
+      #ddd 25%,
+      transparent 25%,
+      transparent 75%,
+      #ddd 75%,
+      #ddd
+    ),
+    linear-gradient(
+      45deg,
+      #ddd 25%,
+      transparent 25%,
+      transparent 75%,
+      #ddd 75%,
+      #ddd
+    );
+  background-size: 128px 128px;
+  background-position: 0 0, 64px 64px;
+}
+
+#logo {
+  grid-column-start: 1;
+  grid-column-end: 3;
+  display: grid;
+  place-content: center;
+  border-bottom: 1vw solid black;
+}
+
+img {
+  width: 30vw;
+  margin-top: -5vw;
+}
+
+auto-date,
+auto-time {
+  display: grid;
+  place-content: center;
+}
+
+/* auto-date {
+  grid-area: auto-date;
+}
+
+auto-time {
+  grid-area: auto-time;
+}
+
+#date-label {
+  grid-area: date-label;
+}
+
+#time-label {
+  grid-area: time-label;
+} */

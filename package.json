@@ -1,0 +1,15 @@
+{
+  "name": "clapperboard",
+  "version": "0.0.1",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Lucas Garron <code@garron.net>",
+  "license": "GPL-3.0-or-later",
+  "description": "",
+  "dependencies": {
+    "parcel": "^2.0.0-nightly.688"
+  }
+}
