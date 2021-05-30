@@ -1,6 +1,9 @@
 // @ts-ignore
 import clapSrc from "url:./121.wav";
 
+const GLOBAL_SPEAK_ENABLED =
+  new URL(location.href).searchParams.get("speak") !== "false";
+
 function pad2(n: number): string {
   return n.toString().padStart(2, "0");
 }
@@ -69,12 +72,12 @@ class SceneTake extends HTMLElement {
     this.textContent = this.take.toString();
     localStorage["clapperboard-take"] = this.take;
 
-    // if (speak) {
-    //   console.log(speak);
-    //   window.speechSynthesis.speak(
-    //     new SpeechSynthesisUtterance(`Take ${this.take}`)
-    //   );
-    // }
+    if (GLOBAL_SPEAK_ENABLED && speak) {
+      console.log(speak);
+      window.speechSynthesis.speak(
+        new SpeechSynthesisUtterance(`Take ${this.take}`)
+      );
+    }
 
     document.body.animate([{ opacity: "0", offset: 0 }], {
       duration: 200,
