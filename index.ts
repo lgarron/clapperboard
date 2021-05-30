@@ -55,13 +55,21 @@ class SceneTake extends HTMLElement {
   }
 
   connectedCallback() {
-    this.addEventListener("click", () => this.incrementTake());
+    document.body.addEventListener("click", () => this.incrementTake());
   }
 
   incrementTake() {
     this.take++;
     this.textContent = this.take.toString();
     localStorage["clapperboard-take"] = this.take;
+
+    window.speechSynthesis.speak(
+      new SpeechSynthesisUtterance(`Take ${this.take}`)
+    );
+
+    document.body.animate([{ opacity: "0", offset: 0 }], {
+      duration: 200,
+    });
   }
 }
 
