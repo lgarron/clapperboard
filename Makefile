@@ -1,23 +1,23 @@
 .PHONY: build
 build: clean
-	npx parcel build --public-url ./ ./index.html
+	bun run script/build.ts
 
 .PHONY: dev
 dev:
-	npx parcel ./index.html
+	bun run script/dev.ts
 
-SFTP_PATH = "towns.dreamhost.com:~/garron.net/app/clapperboard/"
-URL       = "https://garron.net/app/clapperboard/"
+.PHONY: lint
+lint:
+	npx @biomejs/biome check ./src
 
-.PHONY: deploy
+.PHONY: format
+format:
+	npx @biomejs/biome format --write ./src
+
+.PHOHY: deploy
 deploy: build
-	rsync -avz \
-		--exclude .DS_Store \
-		--exclude .git \
-		./dist/ \
-		${SFTP_PATH}
-	echo "\nDone deploying. Go to ${URL}\n"
+	bun x @cubing/deploy
 
 .PHONY: clean
 clean:
-	rm -rf /dist
+	rm -rf ./dist

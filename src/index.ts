@@ -1,5 +1,5 @@
 // @ts-ignore
-import clapSrc from "url:./121.wav";
+const clapSrc = import.meta.resolve("./121.wav");
 
 const GLOBAL_SPEAK_ENABLED =
   new URL(location.href).searchParams.get("speak") !== "false";
@@ -19,7 +19,7 @@ class AutoDate extends HTMLElement {
     }
     const date = new Date();
     this.textContent = `${date.getFullYear()}-${pad2(
-      date.getMonth() + 1
+      date.getMonth() + 1,
     )}-${pad2(date.getDate())}`;
   }
 }
@@ -37,9 +37,9 @@ class AutoTime extends HTMLElement {
     }
     const date = new Date();
     this.textContent = `${pad2(date.getHours())}:${pad2(
-      date.getMinutes()
+      date.getMinutes(),
     )}:${pad2(date.getSeconds())}.${pad2(
-      Math.floor(date.getMilliseconds() / 10)
+      Math.floor(date.getMilliseconds() / 10),
     )}`;
     requestAnimationFrame(() => this.animFrame());
   }
@@ -53,7 +53,8 @@ class SceneTake extends HTMLElement {
   constructor() {
     super();
     try {
-      this.take = parseInt(localStorage["clapperboard-take"]);
+      this.take = Number.parseInt(localStorage["clapperboard-take"]);
+      // biome-ignore lint/suspicious/noGlobalIsNan: <explanation>
       if (isNaN(this.take)) {
         this.take = 1;
       }
@@ -63,10 +64,11 @@ class SceneTake extends HTMLElement {
   }
 
   connectedCallback() {
-    this.textContent = (this.take + 1).toString() + " 🔜 ";
+    this.textContent = `${(this.take + 1).toString()} 🔜 `;
     document.body.addEventListener("click", () => this.incrementTake(true));
   }
 
+  // biome-ignore lint/style/noInferrableTypes: Explicit is better than implicit
   incrementTake(speak: boolean = true) {
     this.take++;
     this.textContent = this.take.toString();
@@ -75,7 +77,7 @@ class SceneTake extends HTMLElement {
     if (GLOBAL_SPEAK_ENABLED && speak) {
       console.log(speak);
       window.speechSynthesis.speak(
-        new SpeechSynthesisUtterance(`Take ${this.take}`)
+        new SpeechSynthesisUtterance(`Take ${this.take}`),
       );
     }
 
@@ -93,7 +95,7 @@ let clapElem: HTMLAudioElement;
 function newClapElem() {
   clapElem = document.createElement("audio");
   clapElem.src = clapSrc;
-  clapElem.preload = "true";
+  clapElem.preload = "auto";
 }
 newClapElem();
 function clap() {

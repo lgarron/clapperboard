@@ -1,6 +1,11 @@
 {
   "name": "clapperboard",
-  "dependencies": {
-    "parcel": "^2.0.0-nightly.688"
+  "devDependencies": {
+    "@biomejs/biome": "^1.7.2",
+    "barely-a-dev-server": "^0.6.1",
+    "esbuild": "^0.20.2"
+  },
+  "@cubing/deploy": {
+    "https://garron.net/app/clapperboard/": {}
   }
 }
